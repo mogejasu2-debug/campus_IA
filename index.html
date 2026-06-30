@@ -580,7 +580,7 @@ const db = {
 async function llamarClaude(messages, system='', maxTokens=1000) {
   const body = { model: CLAUDE_MODEL, max_tokens: maxTokens, messages };
   if (system) body.system = system;
-  const res = await fetch('https://api.anthropic.com/v1/messages', {
+  const res = await fetch('/api/claude', {
     method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body)
   });
   const data = await res.json();
@@ -588,7 +588,7 @@ async function llamarClaude(messages, system='', maxTokens=1000) {
 }
 
 async function llamarClaudeConImagen(base64, mimeType, prompt) {
-  const res = await fetch('https://api.anthropic.com/v1/messages', {
+  const res = await fetch('/api/claude', {
     method: 'POST', headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
       model: CLAUDE_MODEL, max_tokens: 1000,
@@ -834,7 +834,7 @@ async function procesarPDF(input) {
 
   try {
     const base64 = await fileToBase64(file);
-    const res = await fetch('https://api.anthropic.com/v1/messages', {
+    const res = await fetch('/api/claude', {
       method:'POST', headers:{'Content-Type':'application/json'},
       body: JSON.stringify({
         model: CLAUDE_MODEL, max_tokens: 1000,
